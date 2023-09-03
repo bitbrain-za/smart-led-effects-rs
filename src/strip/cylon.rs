@@ -1,4 +1,3 @@
-use core::panic;
 use std::vec;
 
 use palette::{FromColor, Hsv, Srgb};
@@ -28,33 +27,24 @@ pub struct Cylon {
 }
 
 impl Cylon {
-    const DEFAULT_SIZE: usize = 1;
-    const DEFAULT_FADE: f32 = 0.0;
+    const DEFAULT_SIZE: usize = 4;
+    const DEFAULT_FADE: f32 = 0.2;
 
     pub fn new(count: usize, colour: Srgb<u8>, size: Option<usize>, fade: Option<f32>) -> Self {
         let mut brightness = vec![0.0; count];
         let size = size.unwrap_or(Cylon::DEFAULT_SIZE);
 
-        for i in 0..size {
-            brightness[i] = 1.0;
+        for pixel in brightness.iter_mut().take(size) {
+            *pixel = 1.0;
         }
 
         Cylon {
             colour: Hsv::from_color(colour.into_format()),
             brightness,
-            start: size,
+            start: size - 1,
             direction: Direction::Forward,
             size,
             fade: fade.unwrap_or(Cylon::DEFAULT_FADE),
-        }
-    }
-}
-
-impl Cylon {
-    fn reset(&mut self) {
-        self.brightness = vec![0.0; self.brightness.len()];
-        for i in 0..self.size {
-            self.brightness[i] = 1.0;
         }
     }
 }
@@ -64,28 +54,52 @@ impl Iterator for Cylon {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let len = self.brightness.len();
 
-        if self.start == len - self.size + 1 {
-            self.start = self.size;
-            self.reset();
-            self.direction.next();
-        } else {
-            self.start += 1;
-            self.brightness.rotate_right(1);
-        }
+        let mut trail: Vec<f32> = vec![0.0; len];
 
-        let mut out: Vec<Srgb<u8>> = self
+        match self.direction {
+            Direction::Forward => {
+                self.brightness.rotate_right(1);
+                self.start += 1;
+
+                if self.start == len - 1 {
+                    self.direction.next();
+                }
+
+                let mut val: f32 = 0.8;
+                if self.start + 1 > self.size {
+                    for i in (0..self.start + 1 - self.size).rev() {
+                        trail[i] = val;
+                        val = (val - self.fade).max(0.0);
+                    }
+                }
+            }
+            _ => {
+                self.brightness.rotate_left(1);
+                self.start -= 1;
+                if self.start == self.size - 1 {
+                    self.direction.next();
+                }
+
+                if self.start < len - 1 {
+                    let mut val: f32 = 0.8;
+                    for pixel in trail.iter_mut().take(len).skip(self.start) {
+                        *pixel = val;
+                        val = (val - self.fade).max(0.0);
+                    }
+                }
+            }
+        };
+
+        let out: Vec<Srgb<u8>> = self
             .brightness
             .iter()
-            .map(|x| {
+            .zip(trail.iter())
+            .map(|(&x, &y)| {
                 let mut pixel = self.colour;
-                pixel.value = *x;
+                pixel.value = (x + y).min(1.0);
                 Srgb::from_color(pixel).into_format::<u8>()
             })
             .collect();
-
-        if self.direction == Direction::Backward {
-            out.reverse();
-        }
 
         Some(out)
     }
