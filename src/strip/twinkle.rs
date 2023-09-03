@@ -30,6 +30,14 @@ impl Twinkle {
             colour: colour.map(|colour| Hsv::from_color(colour.into_format())),
         }
     }
+
+    pub fn sparkle(count: usize, colour: Option<Srgb<u8>>) -> Self {
+        let colour = match colour {
+            Some(colour) => Some(colour),
+            None => Some(Srgb::<u8>::new(255, 255, 255)),
+        };
+        Twinkle::new(count, colour, Some(20), Some(0.4), Some(1.0))
+    }
 }
 
 impl Twinkle {
