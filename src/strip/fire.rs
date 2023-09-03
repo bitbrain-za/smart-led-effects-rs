@@ -4,25 +4,17 @@ use rand::{thread_rng, Rng};
 pub struct Fire {
     cooling: u8,
     sparking: u8,
-    brightness: u8,
     heat: Vec<u8>,
 }
 
 impl Fire {
     const DEFAULT_COOLING: u8 = 40;
     const DEFAULT_SPARKING: u8 = 120;
-    const DEFAULT_BRIGHTNESS: u8 = 255;
-    pub fn new(
-        count: usize,
-        brightness: Option<u8>,
-        cooling: Option<u8>,
-        sparking: Option<u8>,
-    ) -> Self {
+    pub fn new(count: usize, cooling: Option<u8>, sparking: Option<u8>) -> Self {
         Fire {
             cooling: (((cooling.unwrap_or(Fire::DEFAULT_COOLING) as f32 * 10.0) / count as f32)
                 + 2.0) as u8,
             sparking: sparking.unwrap_or(Fire::DEFAULT_SPARKING),
-            brightness: brightness.unwrap_or(Fire::DEFAULT_BRIGHTNESS),
             heat: vec![0; count],
         }
     }
