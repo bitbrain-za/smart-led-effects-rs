@@ -1,8 +1,10 @@
 mod cycle;
-mod cylon;
-mod fire;
-mod rainbow;
 pub use cycle::Cycle;
+mod cylon;
 pub use cylon::Cylon;
+mod fire;
 pub use fire::Fire;
+mod rainbow;
 pub use rainbow::Rainbow;
+mod twinkle;
+pub use twinkle::Twinkle;
