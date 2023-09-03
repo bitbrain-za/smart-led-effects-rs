@@ -2,9 +2,9 @@ use palette::Srgb;
 use rand::{thread_rng, Rng};
 
 pub struct Fire {
-    pub cooling: u8,
-    pub sparking: u8,
-    pub brightness: u8,
+    cooling: u8,
+    sparking: u8,
+    brightness: u8,
     heat: Vec<u8>,
 }
 
