@@ -1,3 +1,5 @@
+mod bounce;
+pub use bounce::Bounce;
 mod cycle;
 pub use cycle::Cycle;
 mod cylon;
