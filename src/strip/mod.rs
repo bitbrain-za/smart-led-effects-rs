@@ -12,6 +12,8 @@ mod rainbow;
 pub use rainbow::Rainbow;
 mod running_lights;
 pub use running_lights::RunningLights;
+mod timer;
+pub use timer::Timer;
 mod twinkle;
 pub use twinkle::Twinkle;
 mod snow_sparkle;
