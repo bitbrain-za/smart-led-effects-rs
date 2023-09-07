@@ -1,3 +1,5 @@
+mod breathe;
+pub use breathe::Breathe;
 mod bounce;
 pub use bounce::Bounce;
 mod cycle;
