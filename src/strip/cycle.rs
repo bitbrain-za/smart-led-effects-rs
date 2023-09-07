@@ -1,3 +1,4 @@
+use crate::strip::Effect;
 use palette::{FromColor, Hsv, ShiftHue, Srgb};
 
 pub struct Cycle {
@@ -20,8 +21,7 @@ impl Cycle {
     }
 }
 
-impl Iterator for Cycle {
-    type Item = Vec<Srgb<u8>>;
+impl Effect for Cycle {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         if let Some(pixel) = self.last_state.get(0) {
             self.last_state = vec![pixel.shift_hue(self.step_size); self.last_state.len()];

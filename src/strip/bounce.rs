@@ -1,3 +1,4 @@
+use crate::strip::Effect;
 use palette::{Darken, FromColor, Hsv, Srgb};
 use rand::{thread_rng, Rng};
 use std::{ops::Range, time::Instant};
@@ -25,7 +26,7 @@ struct Ball {
 impl Ball {
     const DEFAULT_GRAVITY: f32 = 30.0; // pixels per a second ^ 2
     const DEFAULT_BOUNCINESS: Range<f32> = 0.2..0.8;
-    const DEFAULT_SPEEDS: Range<f32> = 20.0..50.0;
+    const DEFAULT_SPEEDS: Range<f32> = 20.0..80.0;
     fn new(
         colour: Option<Srgb>,
         gravity: Option<f32>,
@@ -130,10 +131,8 @@ impl Bounce {
     }
 }
 
-impl Iterator for Bounce {
-    type Item = Vec<Srgb<u8>>;
-
-    fn next(&mut self) -> Option<Self::Item> {
+impl Effect for Bounce {
+    fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let mut out = vec![Srgb::<u8>::new(0, 0, 0); self.count];
         for ball in self.balls.iter_mut() {
             ball.update();

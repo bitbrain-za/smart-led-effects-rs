@@ -1,3 +1,4 @@
+use crate::strip::Effect;
 use palette::Srgb;
 
 pub struct Wipe {
@@ -32,8 +33,7 @@ impl Wipe {
     }
 }
 
-impl Iterator for Wipe {
-    type Item = Vec<Srgb<u8>>;
+impl Effect for Wipe {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let out = self
             .buffer

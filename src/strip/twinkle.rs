@@ -1,3 +1,4 @@
+use crate::strip::Effect;
 use palette::{FromColor, Hsv, Srgb};
 use rand::{thread_rng, Rng};
 
@@ -69,8 +70,7 @@ impl Twinkle {
     }
 }
 
-impl Iterator for Twinkle {
-    type Item = Vec<Srgb<u8>>;
+impl Effect for Twinkle {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         self.fade_sparkles();
 

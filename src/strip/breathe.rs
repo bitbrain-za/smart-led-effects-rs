@@ -1,5 +1,5 @@
-use crate::Rgb;
-use palette::{FromColor, Hsv, IntoColor};
+use crate::strip::Effect;
+use palette::{FromColor, Hsv, IntoColor, Srgb};
 use rand::{thread_rng, Rng};
 
 enum Direction {
@@ -16,7 +16,7 @@ pub struct Breathe {
 
 impl Breathe {
     const DEFAULT_STEP: f32 = 0.02;
-    pub fn new(count: usize, colour: Option<Rgb>, step_size: Option<f32>) -> Self {
+    pub fn new(count: usize, colour: Option<Srgb>, step_size: Option<f32>) -> Self {
         let random_colour = colour.is_none();
         let colour: Hsv = match colour {
             Some(colour) => colour.into_color(),
@@ -43,9 +43,8 @@ impl Breathe {
     }
 }
 
-impl Iterator for Breathe {
-    type Item = Vec<Rgb>;
-    fn next(&mut self) -> Option<Self::Item> {
+impl Effect for Breathe {
+    fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         match self.direction {
             Direction::Up => {
                 self.colour.value += self.step;
@@ -62,6 +61,9 @@ impl Iterator for Breathe {
             }
         };
 
-        Some(vec![Rgb::from_color(self.colour); self.count])
+        Some(vec![
+            Srgb::from_color(self.colour).into_format::<u8>();
+            self.count
+        ])
     }
 }

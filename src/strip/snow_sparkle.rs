@@ -1,3 +1,4 @@
+use crate::strip::Effect;
 use palette::{Hsv, Srgb};
 use rand::{thread_rng, Rng};
 
@@ -72,8 +73,7 @@ impl SnowSparkle {
     }
 }
 
-impl Iterator for SnowSparkle {
-    type Item = Vec<Srgb<u8>>;
+impl Effect for SnowSparkle {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         self.fade_sparkles();
 

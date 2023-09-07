@@ -24,3 +24,6 @@ mod snow_sparkle;
 pub use snow_sparkle::SnowSparkle;
 mod wipe;
 pub use wipe::Wipe;
+
+mod effects_trait;
+pub use effects_trait::Effect;

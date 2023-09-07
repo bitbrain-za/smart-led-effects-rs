@@ -1,3 +1,4 @@
+use crate::strip::Effect;
 use std::vec;
 
 use palette::{FromColor, Hsv, Srgb};
@@ -49,8 +50,7 @@ impl Cylon {
     }
 }
 
-impl Iterator for Cylon {
-    type Item = Vec<Srgb<u8>>;
+impl Effect for Cylon {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let len = self.brightness.len();
 
