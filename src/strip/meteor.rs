@@ -7,10 +7,11 @@ pub struct Meteor {
     position: usize,
     fade: f32,
     current: Vec<Srgb>,
+    random_colour: bool,
 }
 
 impl Meteor {
-    const DEFAULT_SIZE: usize = 5;
+    const DEFAULT_SIZE: usize = 4;
     const DEFAULT_FADE: f32 = 0.3;
     const DEFAULT_COLOUR: Srgb<u8> = Srgb::<u8>::new(255, 255, 255);
 
@@ -27,6 +28,7 @@ impl Meteor {
             position: 0,
             fade: fade.unwrap_or(Self::DEFAULT_FADE),
             current: vec![Srgb::new(0.0, 0.0, 0.0); count],
+            random_colour: colour.is_none(),
         }
     }
 }
@@ -48,6 +50,13 @@ impl Iterator for Meteor {
         }
         self.position += 1;
         if self.position > 2 * self.count {
+            if self.random_colour {
+                self.colour = Srgb::new(
+                    rng.gen_range(0.0..1.0),
+                    rng.gen_range(0.0..1.0),
+                    rng.gen_range(0.0..1.0),
+                );
+            }
             self.position = 0;
         }
 

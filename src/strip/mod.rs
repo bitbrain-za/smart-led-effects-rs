@@ -8,6 +8,8 @@ mod fire;
 pub use fire::Fire;
 mod meteor;
 pub use meteor::Meteor;
+mod progress;
+pub use progress::ProgressBar;
 mod rainbow;
 pub use rainbow::Rainbow;
 mod running_lights;
