@@ -64,7 +64,11 @@ impl Ball {
     }
 
     fn update(&mut self) {
-        let elapsed = self.last_update.elapsed().as_secs_f32() / 1.0;
+        let mut elapsed = self.last_update.elapsed().as_secs_f32() / 1.0;
+        if elapsed > 1.0 {
+            self.reset();
+            elapsed = 0.0;
+        }
         self.last_update = Instant::now();
 
         match self.direction {

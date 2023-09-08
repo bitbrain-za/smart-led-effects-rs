@@ -52,26 +52,26 @@ impl Timer {
 
 impl Effect for Timer {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
+        let mut out = vec![Srgb::new(0u8, 0u8, 0u8); self.count];
         let elapsed = self.start.elapsed().as_secs();
         if elapsed >= self.duration.as_secs() {
-            None
-        } else {
-            let pixels = self.count - (self.pixels_per_second * elapsed as f32).ceil() as usize;
-            let mut out = vec![Srgb::new(0u8, 0u8, 0u8); self.count];
-            if self.gradient {
-                for (i, pixel) in out.iter_mut().take(pixels).enumerate() {
-                    *pixel = self
-                        .end_colour
-                        .mix(self.start_colour, i as f32 / self.count as f32)
-                        .into_format();
-                }
-            } else {
-                for pixel in out.iter_mut().take(pixels) {
-                    let mix = elapsed as f32 / self.duration.as_secs() as f32;
-                    *pixel = self.start_colour.mix(self.end_colour, mix).into_format();
-                }
-            }
-            Some(out)
+            self.reset();
+            return Some(out);
         }
+        let pixels = self.count - (self.pixels_per_second * elapsed as f32).ceil() as usize;
+        if self.gradient {
+            for (i, pixel) in out.iter_mut().take(pixels).enumerate() {
+                *pixel = self
+                    .end_colour
+                    .mix(self.start_colour, i as f32 / self.count as f32)
+                    .into_format();
+            }
+        } else {
+            for pixel in out.iter_mut().take(pixels) {
+                let mix = elapsed as f32 / self.duration.as_secs() as f32;
+                *pixel = self.start_colour.mix(self.end_colour, mix).into_format();
+            }
+        }
+        Some(out)
     }
 }
