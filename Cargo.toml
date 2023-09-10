@@ -2,6 +2,13 @@
 name = "smart_led_effects"
 version = "0.1.0"
 edition = "2021"
+authors = ["Philip Barlow"]
+description = "A simple character decoder for USB RFID readers"
+license = "MIT"
+repository = "https://github.com/bitbrain-za/usb-rfid-rs"
+homepage = "https://github.com/bitbrain-za/usb-rfid-rs"
+readme = "README.md"
+keywords = ["ws2812", "neopixel", "smart-leds" ]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
