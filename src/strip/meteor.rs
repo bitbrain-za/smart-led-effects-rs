@@ -1,4 +1,4 @@
-use crate::strip::Effect;
+use crate::strip::EffectIterator;
 use palette::{Darken, Srgb};
 use rand::{thread_rng, Rng};
 pub struct Meteor {
@@ -34,7 +34,7 @@ impl Meteor {
     }
 }
 
-impl Effect for Meteor {
+impl EffectIterator for Meteor {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let mut rng = thread_rng();
         for pixel in self.current.iter_mut() {

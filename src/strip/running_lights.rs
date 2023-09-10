@@ -1,4 +1,4 @@
-use crate::strip::Effect;
+use crate::strip::EffectIterator;
 use crate::utils::{single_hsv_to_srgb, srgbu8_to_hsv};
 use palette::{Hsv, Srgb};
 pub struct RunningLights {
@@ -25,7 +25,7 @@ impl RunningLights {
     }
 }
 
-impl Effect for RunningLights {
+impl EffectIterator for RunningLights {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let mut out = vec![Srgb::<u8>::new(0, 0, 0); self.count];
         for (i, pixel) in out.iter_mut().enumerate() {

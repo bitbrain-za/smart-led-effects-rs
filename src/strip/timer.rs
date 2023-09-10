@@ -1,4 +1,4 @@
-use crate::strip::Effect;
+use crate::strip::EffectIterator;
 use palette::{Mix, Srgb};
 use std::time::{Duration, Instant};
 
@@ -50,7 +50,7 @@ impl Timer {
     }
 }
 
-impl Effect for Timer {
+impl EffectIterator for Timer {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let mut out = vec![Srgb::new(0u8, 0u8, 0u8); self.count];
         let elapsed = self.start.elapsed().as_secs();

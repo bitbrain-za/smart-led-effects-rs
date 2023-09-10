@@ -26,7 +26,7 @@ mod wipe;
 pub use wipe::Wipe;
 
 mod effects_trait;
-pub use effects_trait::Effect;
+pub use effects_trait::EffectIterator;
 
 pub const LIST: &[&str] = &[
     "Breathe",
@@ -48,7 +48,7 @@ pub fn list() -> Vec<String> {
     LIST.iter().map(|s| s.to_string()).collect()
 }
 
-pub enum Effects {
+pub enum Effect {
     Breathe(Breathe),
     Bounce(Bounce),
     Cycle(Cycle),
@@ -64,22 +64,22 @@ pub enum Effects {
     Wipe(Wipe),
 }
 
-impl std::fmt::Display for Effects {
+impl std::fmt::Display for Effect {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Effects::Breathe(_) => write!(f, "Breathe"),
-            Effects::Bounce(_) => write!(f, "Bounce"),
-            Effects::Cycle(_) => write!(f, "Cycle"),
-            Effects::Cylon(_) => write!(f, "Cylon"),
-            Effects::Fire(_) => write!(f, "Fire"),
-            Effects::Meteor(_) => write!(f, "Meteor"),
-            Effects::ProgressBar(_) => write!(f, "ProgressBar"),
-            Effects::Rainbow(_) => write!(f, "Rainbow"),
-            Effects::RunningLights(_) => write!(f, "RunningLights"),
-            Effects::Timer(_) => write!(f, "Timer"),
-            Effects::Twinkle(_) => write!(f, "Twinkle"),
-            Effects::SnowSparkle(_) => write!(f, "SnowSparkle"),
-            Effects::Wipe(_) => write!(f, "Wipe"),
+            Effect::Breathe(_) => write!(f, "Breathe"),
+            Effect::Bounce(_) => write!(f, "Bounce"),
+            Effect::Cycle(_) => write!(f, "Cycle"),
+            Effect::Cylon(_) => write!(f, "Cylon"),
+            Effect::Fire(_) => write!(f, "Fire"),
+            Effect::Meteor(_) => write!(f, "Meteor"),
+            Effect::ProgressBar(_) => write!(f, "ProgressBar"),
+            Effect::Rainbow(_) => write!(f, "Rainbow"),
+            Effect::RunningLights(_) => write!(f, "RunningLights"),
+            Effect::Timer(_) => write!(f, "Timer"),
+            Effect::Twinkle(_) => write!(f, "Twinkle"),
+            Effect::SnowSparkle(_) => write!(f, "SnowSparkle"),
+            Effect::Wipe(_) => write!(f, "Wipe"),
         }
     }
 }

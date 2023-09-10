@@ -1,5 +1,5 @@
 use palette::Srgb;
 
-pub trait Effect {
+pub trait EffectIterator {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>>;
 }

@@ -1,4 +1,4 @@
-use crate::strip::Effect;
+use crate::strip::EffectIterator;
 use palette::{FromColor, Hsv, IntoColor, Srgb};
 use rand::{thread_rng, Rng};
 
@@ -43,7 +43,7 @@ impl Breathe {
     }
 }
 
-impl Effect for Breathe {
+impl EffectIterator for Breathe {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         match self.direction {
             Direction::Up => {

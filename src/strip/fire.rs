@@ -1,4 +1,4 @@
-use crate::strip::Effect;
+use crate::strip::EffectIterator;
 use palette::Srgb;
 use rand::{thread_rng, Rng};
 
@@ -36,7 +36,7 @@ impl Fire {
     }
 }
 
-impl Effect for Fire {
+impl EffectIterator for Fire {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let mut rng = thread_rng();
 

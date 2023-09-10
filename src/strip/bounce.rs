@@ -1,4 +1,4 @@
-use crate::strip::Effect;
+use crate::strip::EffectIterator;
 use palette::{Darken, FromColor, Hsv, Srgb};
 use rand::{thread_rng, Rng};
 use std::{ops::Range, time::Instant};
@@ -135,7 +135,7 @@ impl Bounce {
     }
 }
 
-impl Effect for Bounce {
+impl EffectIterator for Bounce {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let mut out = vec![Srgb::<u8>::new(0, 0, 0); self.count];
         for ball in self.balls.iter_mut() {

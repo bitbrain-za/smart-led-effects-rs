@@ -1,4 +1,4 @@
-use crate::strip::Effect;
+use crate::strip::EffectIterator;
 use palette::{FromColor, Hsv, ShiftHueAssign, Srgb};
 
 pub struct Rainbow {
@@ -26,7 +26,7 @@ impl Rainbow {
     }
 }
 
-impl Effect for Rainbow {
+impl EffectIterator for Rainbow {
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         for pixel in self.last_state.iter_mut() {
             pixel.shift_hue_assign(self.step_size);
