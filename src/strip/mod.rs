@@ -2,6 +2,8 @@ mod breathe;
 pub use breathe::Breathe;
 mod bounce;
 pub use bounce::Bounce;
+mod christmas;
+pub use christmas::Christmas;
 mod cycle;
 pub use cycle::Cycle;
 mod cylon;
