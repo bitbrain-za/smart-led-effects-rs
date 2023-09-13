@@ -4,13 +4,18 @@ use rand::{thread_rng, Rng};
 
 use crate::utils::{hsv_to_srgb, srgbu8_to_hsv};
 
+pub struct Sparkle {
+    colour: Srgb,
+    intensity: f32,
+    location: usize,
+}
+
 pub struct Christmas {
     frequency: u8,
     probability: f32,
     fade: f32,
-    current: Vec<Hsv>,
-    mix: Vec<f32>,
-    background: Hsv,
+    sparkles: Vec<Sparkle>,
+    length: usize,
 }
 
 impl Christmas {
@@ -18,7 +23,7 @@ impl Christmas {
     const DEFAULT_PROBABILITY: f32 = 0.1;
     const DEFAULT_FADE: f32 = 0.4;
     const BASE_BRIGHTNESS: f32 = 1.0;
-    const BACKGROUND: Srgb = Srgb::new(0.0, 1.0, 0.0);
+    const BACKGROUND: Srgb = Srgb::new(6.0 / 255.0, 108.0 / 255.0, 22.0 / 255.0);
     const BASE_MIX: f32 = -100.0;
 
     pub fn new(
@@ -39,9 +44,8 @@ impl Christmas {
             frequency: sparkle.unwrap_or(Christmas::DEFAULT_FREQUENCY),
             fade: fade.unwrap_or(Christmas::DEFAULT_FADE),
             probability: probability.unwrap_or(Christmas::DEFAULT_PROBABILITY),
-            current: vec![colour; count],
-            mix: vec![0.0; count],
-            background: colour,
+            sparkles: Vec::new(),
+            length: count,
         }
     }
 }
@@ -49,34 +53,37 @@ impl Christmas {
 impl Christmas {
     fn generate_sparkle(&mut self) {
         let mut rng = thread_rng();
-        let index = rng.gen_range(0..self.current.len());
+
+        let chance = rng.gen_range(0.0..1.0);
+        if chance > self.probability {
+            return;
+        }
+
+        let index = rng.gen_range(0..self.length);
 
         let c_index = rng.gen_range(0.0..1.0);
 
         let colour = if c_index < 0.5 {
-            Hsv::from_color(Srgb::new(1.0, 0.0, 0.0))
+            Srgb::new(1.0, 0.0, 0.0)
         } else if c_index < 0.80 {
-            Hsv::from_color(Srgb::new(0.0, 0.84, 1.0))
+            Srgb::new(0.0, 0.84, 1.0)
         } else {
-            Hsv::from_color(Srgb::new(0.0, 0.0, 1.0))
+            Srgb::new(0.0, 0.0, 1.0)
         };
 
-        let mut sparkle = colour;
-        sparkle.value = rng.gen_range(0.7..1.0);
-
-        let chance = rng.gen_range(0.0..1.0);
-        if chance < self.probability {
-            self.current[index] = sparkle;
-            self.mix[index] = -Self::BASE_MIX;
-        }
+        self.sparkles.push(Sparkle {
+            colour,
+            intensity: 1.0,
+            location: index,
+        });
     }
 
     fn fade_sparkles(&mut self) {
-        for (i, pixel) in self.current.iter_mut().enumerate() {
-            self.mix[i] += self.fade;
-            self.mix[i] = self.mix[i].min(1.0);
-            pixel.mix_assign(self.background, self.mix[i].max(1.0));
+        for sparkle in self.sparkles.iter_mut() {
+            sparkle.intensity -= self.fade;
+            sparkle.intensity = sparkle.intensity.max(0.0);
         }
+        self.sparkles.retain(|sparkle| sparkle.intensity > 0.0);
     }
 }
 
@@ -89,6 +96,12 @@ impl EffectIterator for Christmas {
             self.generate_sparkle();
         }
 
-        Some(hsv_to_srgb(self.current.clone()))
+        let mut out: Vec<Srgb> = vec![self::Christmas::BACKGROUND; self.length];
+
+        for sparkle in self.sparkles.iter() {
+            out[sparkle.location].mix_assign(sparkle.colour, sparkle.intensity);
+        }
+
+        Some(out.iter().map(|&c| c.into_format::<u8>()).collect())
     }
 }
