@@ -25,7 +25,7 @@ impl Particle {
     }
 
     pub fn collide(&self, other: &Particle) -> Option<(Particle, Particle)> {
-        if self.position != other.position {
+        if (self.position - other.position).abs() > 1 || self.position - other.position < -1 {
             return None;
         }
         let mut rhs = other.clone();
@@ -34,7 +34,7 @@ impl Particle {
         rhs.reverse = !rhs.reverse;
 
         let scaling_factor = lhs.size as f32 / (lhs.size + rhs.size) as f32;
-        let mix = lhs.colour.mix(rhs.colour, scaling_factor);
+        let mix = lhs.colour.mix(rhs.colour, scaling_factor / 2.0);
         lhs.colour = mix;
         rhs.colour = mix;
 
@@ -84,6 +84,7 @@ impl EffectIterator for Collision {
                 particle.position += particle.speed as i32;
             }
         }
+        self.check_for_collision();
         if self.particles[0].position < 0 && self.particles[1].position >= self.count as i32 {
             self.reset();
         }
