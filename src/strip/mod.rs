@@ -4,6 +4,8 @@ mod bounce;
 pub use bounce::Bounce;
 mod christmas;
 pub use christmas::Christmas;
+mod collision;
+pub use collision::Collision;
 mod cycle;
 pub use cycle::Cycle;
 mod cylon;
