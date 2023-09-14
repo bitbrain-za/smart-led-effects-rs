@@ -2,7 +2,7 @@ use crate::strip::EffectIterator;
 use palette::{FromColor, Hsv, MixAssign, Srgb};
 use rand::{thread_rng, Rng};
 
-use crate::utils::{hsv_to_srgb, srgbu8_to_hsv};
+use crate::utils::srgbu8_to_hsv;
 
 pub struct Sparkle {
     colour: Srgb,
@@ -24,7 +24,6 @@ impl Christmas {
     const DEFAULT_FADE: f32 = 0.4;
     const BASE_BRIGHTNESS: f32 = 1.0;
     const BACKGROUND: Srgb = Srgb::new(6.0 / 255.0, 108.0 / 255.0, 22.0 / 255.0);
-    const BASE_MIX: f32 = -100.0;
 
     pub fn new(
         count: usize,
