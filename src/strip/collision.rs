@@ -20,7 +20,7 @@ impl Particle {
             colour: Srgb::from_color(Hsv::new(rng.gen_range(0.0..360.0), 1.0, 1.0)),
             reverse,
             speed: 1,
-            size: 1,
+            size: rng.gen_range(1..4),
         }
     }
 
@@ -28,12 +28,12 @@ impl Particle {
         if (self.position - other.position).abs() > 1 || self.position - other.position < -1 {
             return None;
         }
-        let mut rhs = other.clone();
-        let mut lhs = self.clone();
+        let mut rhs = *other;
+        let mut lhs = *self;
         lhs.reverse = !lhs.reverse;
         rhs.reverse = !rhs.reverse;
 
-        let scaling_factor = lhs.size as f32 / (lhs.size + rhs.size) as f32;
+        let scaling_factor = 1.0 - lhs.size as f32 / (lhs.size + rhs.size) as f32;
         let mix = lhs.colour.mix(rhs.colour, scaling_factor / 2.0);
         lhs.colour = mix;
         rhs.colour = mix;
@@ -90,6 +90,21 @@ impl EffectIterator for Collision {
         }
         for particle in self.particles.iter_mut() {
             if particle.position >= 0 && particle.position < self.count as i32 {
+                for i in 0..particle.size {
+                    if particle.reverse {
+                        if particle.position + i as i32 >= 0
+                            && i as i32 + particle.position < self.count as i32
+                        {
+                            out[(particle.position + i as i32) as usize] =
+                                particle.colour.into_format();
+                        }
+                    } else if particle.position - i as i32 >= 0
+                        && (particle.position - i as i32) < self.count as i32
+                    {
+                        out[(particle.position - i as i32) as usize] =
+                            particle.colour.into_format();
+                    }
+                }
                 out[particle.position as usize] = particle.colour.into_format();
             }
         }
