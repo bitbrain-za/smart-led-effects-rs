@@ -1,3 +1,37 @@
+//! # Bounce Effect
+//! The bounce effect will generate a number of balls that bounce up and down the strip.
+//! The balls positions are based on time, use a higher refresh rate for smoother movement.
+//! The speeds, bounciness and colour can be tweaked using the arguments when instantiating the effect.
+//! The bounce effect will generate a number of balls that bounce up and down the strip.
+//! The balls positions are based on time, use a higher refresh rate for smoother movement.
+//! The speeds, bounciness and colour can be tweaked using the arguments when instantiating the effect.
+//!
+//! When created with default parameters, the effect will generate 3 balls with random colours, speeds and bounciness.
+//! When a ball stops bouncing, it will be reset with new random parameters.
+//!
+//! # Example
+//!
+//! ```rust
+//! use smart_led_effects::{
+//!     strip::{self, EffectIterator},
+//!     Srgb,
+//! };
+//!
+//! const COUNT: usize = 55;
+//! let mut effect = strip::Bounce::new(COUNT, None, None, None, None, None);
+//! let pixels = effect.next().unwrap();
+//!     // show pixels
+//! ```
+//!
+//! # Arguments
+//!
+//! - `count` - The number of LEDs in the strip.
+//! - `colour` - The colour of the balls. If None, the colour will be randomised for each ball.
+//! - `balls` - The number of balls to generate. If None, 3 balls will be generated.
+//! - `gravity` - The gravity of the balls. If None, the default value will be used.
+//! - `bounciness` - The bounciness of the balls. If None, the default range will be used.
+//! - `speed` - The speed range of the balls. If None, the default range will be used.
+
 use crate::strip::EffectIterator;
 use palette::{Darken, FromColor, Hsv, Srgb};
 use rand::{thread_rng, Rng};
