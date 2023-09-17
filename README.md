@@ -10,6 +10,7 @@ Currently only works for strips/loops. But someday the plan is to extend it.
 
     - Breathe
     - Bounce
+    - Collision
     - Cylon
     - Fire
     - Meteor
