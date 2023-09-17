@@ -73,7 +73,7 @@ pub fn get_default_effect(count: usize, name: &str) -> Option<Box<dyn EffectIter
         // "Timer" => Some(Box::new(Timer::new(count, None, None))),
         "Twinkle" => Some(Box::new(Twinkle::new(count, None, None, None, None))),
         "SnowSparkle" => Some(Box::new(SnowSparkle::new(count, None, None, None, None))),
-        "Wipe" => Some(Box::new(Wipe::new(count, vec![], false))),
+        "Wipe" => Some(Box::new(Wipe::colour_wipe(count, None, false))),
         _ => None,
     }
 }

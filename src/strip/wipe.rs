@@ -1,11 +1,14 @@
 use crate::strip::EffectIterator;
-use palette::Srgb;
+use palette::{FromColor, Hsv, Srgb};
+use rand::Rng;
 
 pub struct Wipe {
     position: usize,
     buffer: Vec<Srgb<u8>>,
     reverse: bool,
     end: usize,
+    count: usize,
+    randomize: bool,
 }
 
 impl Wipe {
@@ -24,12 +27,33 @@ impl Wipe {
             buffer,
             reverse,
             end,
+            count,
+            randomize: false,
         }
     }
 
-    pub fn colour_wipe(count: usize, colour: Srgb<u8>, reverse: bool) -> Self {
-        let colour: Vec<Srgb<u8>> = vec![colour; count];
-        Wipe::new(count, colour, reverse)
+    pub fn colour_wipe(count: usize, colour: Option<Srgb<u8>>, reverse: bool) -> Self {
+        let mut s = Wipe::new(count, vec![Srgb::new(0, 0, 0); count], reverse);
+        match colour {
+            Some(colour) => s.fill_wipe(colour),
+            None => s.randomize_colour_wipe(),
+        }
+        s
+    }
+
+    fn fill_wipe(&mut self, colour: Srgb<u8>) {
+        let mut buffer = vec![Srgb::<u8>::new(0, 0, 0); self.count];
+        buffer.extend(vec![colour; self.count]);
+        buffer.extend(vec![Srgb::<u8>::new(0, 0, 0); self.count]);
+        self.buffer = buffer;
+    }
+
+    fn randomize_colour_wipe(&mut self) {
+        let mut rng = rand::thread_rng();
+        let colour: Srgb<u8> =
+            Srgb::from_color(Hsv::new(rng.gen_range(0.0..360.0), 1.0, 1.0)).into_format();
+        self.fill_wipe(colour);
+        self.randomize = true;
     }
 }
 
@@ -43,7 +67,7 @@ impl EffectIterator for Wipe {
             .buffer
             .iter()
             .skip(self.position)
-            .take(self.buffer.len() / 3)
+            .take(self.count)
             .copied()
             .collect::<Vec<Srgb<u8>>>();
 
@@ -51,14 +75,19 @@ impl EffectIterator for Wipe {
             self.position -= 1;
             if self.position == 0 {
                 self.position = self.end;
+                if self.randomize {
+                    self.randomize_colour_wipe();
+                }
             }
         } else {
             self.position += 1;
             if self.position >= self.end {
                 self.position = 0;
+                if self.randomize {
+                    self.randomize_colour_wipe();
+                }
             }
         }
-
         Some(out)
     }
 }
