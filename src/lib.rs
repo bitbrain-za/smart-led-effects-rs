@@ -9,6 +9,26 @@
 //!
 //! The [strip::EffectIterator] trait is implemented for each effect, so they can be used as iterators. The iterators will currently all loop forever.
 //!
+//! # Effects
+//! | Name | Description |
+//! | ---- | ----------- |
+//! | [strip::Bounce] | The bounce effect will generate a number of balls that bounce up and down the strip |
+//! | [strip::Breathe] | The breathe effect will generate a single colour that fades in and out |
+//! | [strip::Christmas] | (WIP) Has a green background with random red, blue and gold sparkles |
+//! | [strip::Collision] | Generates two particles that can collide and bounce or shatter |
+//! | [strip::Cycle] | Rotates around the HSV colour space |
+//! | [strip::Cylon] | Generates the cylon eye effect |
+//! | [strip::Fire] | Generates an effect like a flickering flame |
+//! | [strip::Meteor] | Generates a meteor that goes down the strip trailing bits of fading debris |
+//! | [strip::ProgressBar] | (WIP) Signals progress
+//! | [strip::Rainbow] | Generates a rainbow effect |
+//! | [strip::RunningLights] | Generates a running lights effect |
+//! | [strip::Timer] | Counts down for the given duration |
+//! | [strip::SnowSparkle] | Generates random sparkles |
+//! | [strip::Twinkle] | Generates random twinkles |
+//! | [strip::Wipe] | Generates a wipe effect |
+//!
+//!
 //! # Example
 //!
 //! ```rust

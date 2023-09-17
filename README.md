@@ -33,7 +33,7 @@ smart_led_effects = 0.1.0
 ```rust
 
 use smart_led_effects::{
-    strip::{self, Effect},
+    strip::{self, EffectIterator},
     Srgb,
 };
 
