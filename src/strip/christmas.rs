@@ -87,6 +87,10 @@ impl Christmas {
 }
 
 impl EffectIterator for Christmas {
+    fn name(&self) -> &'static str {
+        "Christmas"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         self.fade_sparkles();
 

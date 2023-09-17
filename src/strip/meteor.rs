@@ -35,6 +35,10 @@ impl Meteor {
 }
 
 impl EffectIterator for Meteor {
+    fn name(&self) -> &'static str {
+        "Meteor"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let mut rng = thread_rng();
         for pixel in self.current.iter_mut() {

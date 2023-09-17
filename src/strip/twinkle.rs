@@ -71,6 +71,10 @@ impl Twinkle {
 }
 
 impl EffectIterator for Twinkle {
+    fn name(&self) -> &'static str {
+        "Twinkle"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         self.fade_sparkles();
 

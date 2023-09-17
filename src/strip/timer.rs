@@ -51,6 +51,10 @@ impl Timer {
 }
 
 impl EffectIterator for Timer {
+    fn name(&self) -> &'static str {
+        "Timer"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let mut out = vec![Srgb::new(0u8, 0u8, 0u8); self.count];
         let elapsed = self.start.elapsed().as_secs();

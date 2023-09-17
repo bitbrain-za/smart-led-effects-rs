@@ -37,6 +37,10 @@ impl Fire {
 }
 
 impl EffectIterator for Fire {
+    fn name(&self) -> &'static str {
+        "Fire"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let mut rng = thread_rng();
 

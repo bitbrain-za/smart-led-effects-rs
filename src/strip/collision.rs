@@ -138,6 +138,10 @@ impl Collision {
 }
 
 impl EffectIterator for Collision {
+    fn name(&self) -> &'static str {
+        "Collision"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         if !self.shattered {
             for particle in self.particles.iter_mut() {

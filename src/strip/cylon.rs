@@ -51,6 +51,10 @@ impl Cylon {
 }
 
 impl EffectIterator for Cylon {
+    fn name(&self) -> &'static str {
+        "Cylon"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let len = self.brightness.len();
 

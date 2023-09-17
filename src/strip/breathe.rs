@@ -44,6 +44,10 @@ impl Breathe {
 }
 
 impl EffectIterator for Breathe {
+    fn name(&self) -> &'static str {
+        "Breathe"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         match self.direction {
             Direction::Up => {

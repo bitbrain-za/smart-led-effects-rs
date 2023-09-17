@@ -16,7 +16,7 @@ impl SnowSparkle {
     const DEFAULT_FREQUENCY: u8 = 0x04;
     const DEFAULT_PROBABILITY: f32 = 0.1;
     const DEFAULT_FADE: f32 = 0.4;
-    const BASE_BRIGHTNESS: f32 = 0.5;
+    const BASE_BRIGHTNESS: f32 = 0.2;
     pub fn new(
         count: usize,
         colour: Option<Srgb<u8>>,
@@ -66,14 +66,15 @@ impl SnowSparkle {
     fn fade_sparkles(&mut self) {
         for pixel in self.current.iter_mut() {
             pixel.value = (pixel.value - self.fade).max(Self::BASE_BRIGHTNESS);
-            if pixel.value < Self::BASE_BRIGHTNESS {
-                println!("{} {}", pixel.value, Self::BASE_BRIGHTNESS);
-            }
         }
     }
 }
 
 impl EffectIterator for SnowSparkle {
+    fn name(&self) -> &'static str {
+        "SnowSparkle"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         self.fade_sparkles();
 

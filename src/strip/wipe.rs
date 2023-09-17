@@ -34,6 +34,10 @@ impl Wipe {
 }
 
 impl EffectIterator for Wipe {
+    fn name(&self) -> &'static str {
+        "Wipe"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let out = self
             .buffer

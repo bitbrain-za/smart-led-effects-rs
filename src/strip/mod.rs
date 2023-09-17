@@ -32,9 +32,10 @@ pub use wipe::Wipe;
 mod effects_trait;
 pub use effects_trait::EffectIterator;
 
-pub const LIST: &[&str] = &[
+const LIST: &[&str] = &[
     "Breathe",
     "Bounce",
+    "Collision",
     "Cycle",
     "Cylon",
     "Fire",
@@ -52,38 +53,37 @@ pub fn list() -> Vec<String> {
     LIST.iter().map(|s| s.to_string()).collect()
 }
 
-pub enum Effect {
-    Breathe(Breathe),
-    Bounce(Bounce),
-    Cycle(Cycle),
-    Cylon(Cylon),
-    Fire(Fire),
-    Meteor(Meteor),
-    ProgressBar(ProgressBar),
-    Rainbow(Rainbow),
-    RunningLights(RunningLights),
-    Timer(Timer),
-    Twinkle(Twinkle),
-    SnowSparkle(SnowSparkle),
-    Wipe(Wipe),
+pub fn get_default_effect(count: usize, name: &str) -> Option<Box<dyn EffectIterator>> {
+    match name {
+        "Breathe" => Some(Box::new(Breathe::new(count, None, None))),
+        "Bounce" => Some(Box::new(Bounce::new(count, None, None, None, None, None))),
+        "Collision" => Some(Box::new(Collision::new(count, Some(true)))),
+        "Cycle" => Some(Box::new(Cycle::new(count, None))),
+        "Cylon" => Some(Box::new(Cylon::new(
+            count,
+            palette::Srgb::<u8>::new(255, 0, 0),
+            None,
+            None,
+        ))),
+        "Fire" => Some(Box::new(Fire::new(count, None, None))),
+        "Meteor" => Some(Box::new(Meteor::new(count, None, None, None))),
+        // "ProgressBar" => Some(Box::new(ProgressBar::new(count, None, None))),
+        "Rainbow" => Some(Box::new(Rainbow::new(count, None))),
+        "RunningLights" => Some(Box::new(RunningLights::new(count, None, false))),
+        // "Timer" => Some(Box::new(Timer::new(count, None, None))),
+        "Twinkle" => Some(Box::new(Twinkle::new(count, None, None, None, None))),
+        "SnowSparkle" => Some(Box::new(SnowSparkle::new(count, None, None, None, None))),
+        "Wipe" => Some(Box::new(Wipe::new(count, vec![], false))),
+        _ => None,
+    }
 }
 
-impl std::fmt::Display for Effect {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Effect::Breathe(_) => write!(f, "Breathe"),
-            Effect::Bounce(_) => write!(f, "Bounce"),
-            Effect::Cycle(_) => write!(f, "Cycle"),
-            Effect::Cylon(_) => write!(f, "Cylon"),
-            Effect::Fire(_) => write!(f, "Fire"),
-            Effect::Meteor(_) => write!(f, "Meteor"),
-            Effect::ProgressBar(_) => write!(f, "ProgressBar"),
-            Effect::Rainbow(_) => write!(f, "Rainbow"),
-            Effect::RunningLights(_) => write!(f, "RunningLights"),
-            Effect::Timer(_) => write!(f, "Timer"),
-            Effect::Twinkle(_) => write!(f, "Twinkle"),
-            Effect::SnowSparkle(_) => write!(f, "SnowSparkle"),
-            Effect::Wipe(_) => write!(f, "Wipe"),
+pub fn get_all_default_effects(count: usize) -> Vec<Box<dyn EffectIterator>> {
+    let mut effects = Vec::new();
+    for name in LIST {
+        if let Some(effect) = get_default_effect(count, name) {
+            effects.push(effect);
         }
     }
+    effects
 }

@@ -26,6 +26,10 @@ impl RunningLights {
 }
 
 impl EffectIterator for RunningLights {
+    fn name(&self) -> &'static str {
+        "RunningLights"
+    }
+
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
         let mut out = vec![Srgb::<u8>::new(0, 0, 0); self.count];
         for (i, pixel) in out.iter_mut().enumerate() {
