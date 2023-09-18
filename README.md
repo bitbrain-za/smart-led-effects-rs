@@ -10,7 +10,7 @@ The EffectIterator trait defines two methods:
 `name` will just return the name as a static string slice.
 `next` will return the next page of the effect. It uses the `Option` enum, and in the future there will be One Shot effects that end and return `None`. For now, all effects will loop.
 
-This crate borrows heavily from [fastLED](https://github.com/FastLED/FastLED) and [tweaking4all](https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/).
+This crate borrows heavily from [fastLED](https://github.com/FastLED/FastLED) and [tweaking4all](https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/). The majority of the effect art is taken straight from here, andd reimplemented in Rust.
 
 ## Dimensionality
 
@@ -67,7 +67,7 @@ use smart_led_effects::{
 ## References
 
  - [Palette](https://crates.io/crates/palette)
- - fastLED
-
+ - [fastLED](https://github.com/FastLED/FastLED)
+ - [tweaking4all](https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/)
 
 
