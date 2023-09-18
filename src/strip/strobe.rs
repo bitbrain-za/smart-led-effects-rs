@@ -4,6 +4,31 @@ use std::time::{Duration, Instant};
 
 use super::EffectIterator;
 
+/// Strobe effect
+///
+/// This effect flashes the whole strip in a given colour or random colour if None is supplied.
+///
+/// # Arguments
+///
+/// * `count` - The number of pixels in the strip.
+/// * `colour` - The colour to flash. If `None` a random colour will be used.
+/// * `period` - The period of the strobe.
+/// * `decay` - The rate at which the colour fades. If `None` the default value of `0.02` per tick will be used.
+///
+/// # Examples
+///
+/// ```
+/// use std::time::Duration;
+/// use smart_led_effects::strip::Strobe;
+///
+/// let count = 10;
+/// let colour = None;
+/// let period = Duration::from_secs(1);
+/// let decay = None;
+///
+/// let mut effect = Strobe::new(count, colour, period, decay);
+/// ```
+#[derive(Debug)]
 pub struct Strobe {
     count: usize,
     colour: Option<Hsv>,
