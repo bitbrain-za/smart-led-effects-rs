@@ -23,8 +23,9 @@
 //! | [strip::ProgressBar] | (WIP) Signals progress
 //! | [strip::Rainbow] | Generates a rainbow effect |
 //! | [strip::RunningLights] | Generates a running lights effect |
-//! | [strip::Timer] | Counts down for the given duration |
 //! | [strip::SnowSparkle] | Generates random sparkles |
+//! | [strip::Strobe] | Strobe light/blinder effect |
+//! | [strip::Timer] | Counts down for the given duration |
 //! | [strip::Twinkle] | Generates random twinkles |
 //! | [strip::Wipe] | Generates a wipe effect |
 //!

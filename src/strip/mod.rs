@@ -20,6 +20,8 @@ mod rainbow;
 pub use rainbow::Rainbow;
 mod running_lights;
 pub use running_lights::RunningLights;
+mod strobe;
+pub use strobe::Strobe;
 mod timer;
 pub use timer::Timer;
 mod twinkle;
@@ -43,9 +45,10 @@ const LIST: &[&str] = &[
     "ProgressBar",
     "Rainbow",
     "RunningLights",
+    "SnowSparkle",
+    "Strobe",
     "Timer",
     "Twinkle",
-    "SnowSparkle",
     "Wipe",
 ];
 
@@ -70,6 +73,12 @@ pub fn get_default_effect(count: usize, name: &str) -> Option<Box<dyn EffectIter
         // "ProgressBar" => Some(Box::new(ProgressBar::new(count, None, None))),
         "Rainbow" => Some(Box::new(Rainbow::new(count, None))),
         "RunningLights" => Some(Box::new(RunningLights::new(count, None, false))),
+        "Strobe" => Some(Box::new(Strobe::new(
+            count,
+            None,
+            std::time::Duration::from_secs(1),
+            None,
+        ))),
         // "Timer" => Some(Box::new(Timer::new(count, None, None))),
         "Twinkle" => Some(Box::new(Twinkle::new(count, None, None, None, None))),
         "SnowSparkle" => Some(Box::new(SnowSparkle::new(count, None, None, None, None))),

@@ -17,16 +17,17 @@ Currently only works for strips/loops. But someday the plan is to extend it.
     - ProgressBar
     - Rainbow
     - RunningLights
+    - SnowSparkle
+    - Strobe
     - Timer
     - Twinkle
-    - SnowSparkle
     - Wipe
 
 ## Example Usage
 
 ```toml
 [dependencies]
-smart_led_effects = 0.1.0
+smart_led_effects = 0.1.6
 
 ```
 
