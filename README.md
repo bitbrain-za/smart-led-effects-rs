@@ -1,4 +1,4 @@
-# Neopixel Effects
+# Smart LED Effects
 
 This crate borrows heavily from [fastLED](https://github.com/FastLED/FastLED) and [tweaking4all](https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/).
 
