@@ -24,6 +24,7 @@ Currently only works for strips/loops. But someday the plan is to extend it.
     - Cylon
     - Fire
     - Meteor
+    - Morse
     - ProgressBar
     - Rainbow
     - RunningLights
@@ -37,7 +38,7 @@ Currently only works for strips/loops. But someday the plan is to extend it.
 
 ```toml
 [dependencies]
-smart_led_effects = 0.1.6
+smart_led_effects = 0.1.7
 
 ```
 

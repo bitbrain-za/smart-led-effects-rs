@@ -14,6 +14,8 @@ mod fire;
 pub use fire::Fire;
 mod meteor;
 pub use meteor::Meteor;
+mod morse;
+pub use morse::Morse;
 mod progress;
 pub use progress::ProgressBar;
 mod rainbow;
@@ -42,6 +44,7 @@ const LIST: &[&str] = &[
     "Cylon",
     "Fire",
     "Meteor",
+    "Morse",
     "ProgressBar",
     "Rainbow",
     "RunningLights",
@@ -70,6 +73,7 @@ pub fn get_default_effect(count: usize, name: &str) -> Option<Box<dyn EffectIter
         ))),
         "Fire" => Some(Box::new(Fire::new(count, None, None))),
         "Meteor" => Some(Box::new(Meteor::new(count, None, None, None))),
+        "Morse" => Some(Box::new(Morse::new(count, "Hello, world!", None, false))),
         // "ProgressBar" => Some(Box::new(ProgressBar::new(count, None, None))),
         "Rainbow" => Some(Box::new(Rainbow::new(count, None))),
         "RunningLights" => Some(Box::new(RunningLights::new(count, None, false))),

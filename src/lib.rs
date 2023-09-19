@@ -20,6 +20,7 @@
 //! | [strip::Cylon] | Generates the cylon eye effect |
 //! | [strip::Fire] | Generates an effect like a flickering flame |
 //! | [strip::Meteor] | Generates a meteor that goes down the strip trailing bits of fading debris |
+//! | [strip::Morse] | Converts a string into a series of dots and dashes as per Morse code formatting |
 //! | [strip::ProgressBar] | (WIP) Signals progress
 //! | [strip::Rainbow] | Generates a rainbow effect |
 //! | [strip::RunningLights] | Generates a running lights effect |
