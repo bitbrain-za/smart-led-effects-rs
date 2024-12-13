@@ -27,7 +27,7 @@ impl EffectIterator for Cycle {
     }
 
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
-        if let Some(pixel) = self.last_state.get(0) {
+        if let Some(pixel) = self.last_state.first() {
             self.last_state = vec![pixel.shift_hue(self.step_size); self.last_state.len()];
             Some(
                 self.last_state

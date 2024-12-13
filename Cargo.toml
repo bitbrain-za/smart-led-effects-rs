@@ -1,6 +1,6 @@
 [package]
 name = "smart_led_effects"
-version = "0.1.7"
+version = "0.1.8"
 edition = "2021"
 authors = ["Philip Barlow"]
 description = "A collection of effects for LED strips"
@@ -8,7 +8,7 @@ license = "MIT"
 repository = "https://github.com/bitbrain-za/smart-led-effects-rs"
 homepage = "https://github.com/bitbrain-za/smart-led-effects-rs"
 readme = "README.md"
-keywords = ["ws2812", "neopixel", "smart-leds" ]
+keywords = ["ws2812", "neopixel", "smart-leds"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

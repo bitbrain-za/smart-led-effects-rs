@@ -29,7 +29,7 @@ impl ProgressBar {
     pub fn get_output_for_value(&mut self, percentage: f32) -> Vec<Srgb<u8>> {
         let pixels = self.count - (self.pixels_per_percent * percentage) as usize;
         let mut out = vec![Srgb::new(0.0, 0.0, 0.0).into_format(); self.count];
-        let percentage = percentage.max(0.0).min(100.0) / 100.0;
+        let percentage = percentage.clamp(0.0, 100.0) / 100.0;
 
         if self.gradient {
             for (i, pixel) in out.iter_mut().take(pixels).enumerate() {
