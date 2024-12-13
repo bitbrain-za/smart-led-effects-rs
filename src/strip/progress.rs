@@ -8,6 +8,8 @@ pub struct ProgressBar {
     gradient: bool,
     pixels_per_percent: f32,
     current_value: f32,
+    last_value: f32,
+    last_pixels: Option<Vec<Srgb<u8>>>,
 }
 
 impl ProgressBar {
@@ -26,6 +28,8 @@ impl ProgressBar {
             gradient: gradient.unwrap_or(false),
             pixels_per_percent: count as f32 / 100.0,
             current_value: 0.0,
+            last_value: 0.0,
+            last_pixels: None,
         }
     }
 
@@ -64,7 +68,14 @@ impl EffectIterator for ProgressBar {
     }
 
     fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
+        if self.current_value == self.last_value {
+            if let Some(pixels) = self.last_pixels.take() {
+                return Some(pixels);
+            }
+        }
         let out = self.get_output_for_value(self.current_value);
+        self.last_value = self.current_value;
+        self.last_pixels = Some(out.clone());
         Some(out)
     }
 }
