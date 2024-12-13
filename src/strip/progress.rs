@@ -1,3 +1,4 @@
+use crate::strip::EffectIterator;
 use palette::{Mix, Srgb};
 
 pub struct ProgressBar {
@@ -6,6 +7,7 @@ pub struct ProgressBar {
     end_colour: Srgb,
     gradient: bool,
     pixels_per_percent: f32,
+    current_value: f32,
 }
 
 impl ProgressBar {
@@ -23,30 +25,46 @@ impl ProgressBar {
             end_colour: end_colour.unwrap_or(Self::DEFAULT_END_COLOUR),
             gradient: gradient.unwrap_or(false),
             pixels_per_percent: count as f32 / 100.0,
+            current_value: 0.0,
         }
     }
 
+    pub fn set_percentage(&mut self, percentage: f32) {
+        self.current_value = percentage;
+    }
+
     pub fn get_output_for_value(&mut self, percentage: f32) -> Vec<Srgb<u8>> {
-        let pixels = self.count - (self.pixels_per_percent * percentage) as usize;
+        let percentage = percentage.clamp(0.0, 100.0);
+        let pixels = self.count - (self.pixels_per_percent * (100.0 - percentage)) as usize;
         let mut out = vec![Srgb::new(0.0, 0.0, 0.0).into_format(); self.count];
-        let percentage = percentage.clamp(0.0, 100.0) / 100.0;
 
         if self.gradient {
             for (i, pixel) in out.iter_mut().take(pixels).enumerate() {
                 *pixel = self
-                    .end_colour
-                    .mix(self.start_colour, i as f32 / self.count as f32)
+                    .start_colour
+                    .mix(self.end_colour, i as f32 / self.count as f32)
                     .into_format();
             }
         } else {
             for pixel in out.iter_mut().take(pixels) {
                 *pixel = self
-                    .end_colour
-                    .mix(self.end_colour, percentage)
+                    .start_colour
+                    .mix(self.end_colour, percentage / 100.0)
                     .into_format();
             }
         }
 
         out
+    }
+}
+
+impl EffectIterator for ProgressBar {
+    fn name(&self) -> &'static str {
+        "ProgressBar"
+    }
+
+    fn next(&mut self) -> Option<Vec<Srgb<u8>>> {
+        let out = self.get_output_for_value(self.current_value);
+        Some(out)
     }
 }

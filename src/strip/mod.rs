@@ -74,7 +74,7 @@ pub fn get_default_effect(count: usize, name: &str) -> Option<Box<dyn EffectIter
         "Fire" => Some(Box::new(Fire::new(count, None, None))),
         "Meteor" => Some(Box::new(Meteor::new(count, None, None, None))),
         "Morse" => Some(Box::new(Morse::new(count, "Hello, world!", None, false))),
-        // "ProgressBar" => Some(Box::new(ProgressBar::new(count, None, None))),
+        "ProgressBar" => Some(Box::new(ProgressBar::new(count, None, None, None))),
         "Rainbow" => Some(Box::new(Rainbow::new(count, None))),
         "RunningLights" => Some(Box::new(RunningLights::new(count, None, false))),
         "Strobe" => Some(Box::new(Strobe::new(
